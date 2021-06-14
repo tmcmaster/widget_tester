@@ -7,7 +7,7 @@ import 'package:widget_tester/view_pane.dart';
 class WidgetTester extends StatelessWidget {
   static final sliderDivisionsProvider = StateProvider((ref) => 100);
 
-  static final sizeProvider = StateProvider<Size>((ref) => Size(300, 100));
+  static final sizeProvider = StateProvider<Size>((ref) => Size(300, 200));
 
   static final constraintsProvider = StateNotifierProvider<ConstraintsNotifier, BoxConstraints>(
     (ref) {
