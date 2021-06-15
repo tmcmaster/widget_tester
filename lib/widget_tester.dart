@@ -1,50 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:widget_tester/size_controls.dart';
-import 'package:widget_tester/view_pane.dart';
+import 'package:widget_tester/widget_tester_options.dart';
 import 'package:widget_tester/widget_tester_providers.dart';
+import 'package:widget_tester/widget_tester_size_controls.dart';
+import 'package:widget_tester/widget_tester_view_pane.dart';
 
-class WidgetTester extends StatelessWidget {
+class WidgetTester extends ConsumerWidget {
+  late final WidgetTesterOptions? _options;
   final List<Widget> children;
-  final Widget? child;
-  final int columns;
 
-  const WidgetTester({
+  WidgetTester({
     Key? key,
-    this.child,
+    options,
     this.children = const [],
-    this.columns = 1,
-  }) : super(key: key);
+  }) : super(key: key) {
+    _options = options;
+  }
+
+  WidgetTesterOptions get options => _options ?? WidgetTesterOptions();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
     print('Building the WidgetTester');
     return Expanded(
       child: Container(
-        margin: const EdgeInsets.all(15.0),
-        padding: const EdgeInsets.all(3.0),
-        decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+        margin: options.border.margin,
+        padding: options.border.padding,
+        decoration: options.border.decoration,
         child: Column(
           children: [
             Container(
-              margin: const EdgeInsets.all(15.0),
-              padding: const EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.blueGrey),
-              ),
-              child: SizeControls(sizeProvider: WidgetTesterProviders.sizeProvider),
+              margin: options.controlsBorder.margin,
+              padding: options.controlsBorder.padding,
+              decoration: options.controlsBorder.decoration,
+              child: WidgetTesterSizeControls(sizeProvider: WidgetTesterProviders.sizeProvider),
             ),
             Expanded(
-              child: (child != null
-                  ? ViewPane(
-                      child: child ?? Text('No components to test'),
+              child: (children.length == 1
+                  ? WidgetTesterViewPane(
+                      child: children[0],
                     )
                   : GridView.count(
-                      crossAxisCount: columns,
+                      crossAxisCount: options.columns,
                       children: children
                           .map(
-                            (child) => ViewPane(
+                            (child) => WidgetTesterViewPane(
                               child: child,
                             ),
                           )

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SizeControls extends ConsumerWidget {
+class WidgetTesterSizeControls extends ConsumerWidget {
   final StateProvider<Size> sizeProvider;
-  const SizeControls({
+  const WidgetTesterSizeControls({
     Key? key,
     required this.sizeProvider,
   }) : super(key: key);
