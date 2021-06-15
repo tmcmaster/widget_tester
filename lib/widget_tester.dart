@@ -20,6 +20,7 @@ class WidgetTester extends ConsumerWidget {
 
   WidgetTesterOptions get options => _options ?? WidgetTesterOptions();
 
+  /// TODO: the lsyout builder needs to be to this level.
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     return Expanded(
@@ -40,15 +41,17 @@ class WidgetTester extends ConsumerWidget {
                   ? WidgetTesterViewPane(
                       child: children[0],
                     )
-                  : GridView.count(
-                      crossAxisCount: options.columns,
-                      children: children
-                          .map(
-                            (child) => WidgetTesterViewPane(
-                              child: child,
-                            ),
-                          )
-                          .toList())),
+                  : GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: options.columns,
+                        childAspectRatio: options.aspectRatio,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5,
+                      ),
+                      itemCount: children.length,
+                      itemBuilder: (BuildContext ctx, index) {
+                        return WidgetTesterViewPane(child: children[index]);
+                      })),
             ),
           ],
         ),

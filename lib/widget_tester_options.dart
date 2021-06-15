@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 /// TODO: Need to add support for copyWith, from a static defined default Option
 class WidgetTesterOptions {
   final int columns;
+  final double aspectRatio;
   late final BorderOptions? _border;
   late final BorderOptions? _controlsBorder;
   late final BorderOptions? _viewPaneBorder;
@@ -10,6 +11,7 @@ class WidgetTesterOptions {
   late final BorderOptions? _widgetPaneBorder;
   WidgetTesterOptions({
     this.columns = 1,
+    this.aspectRatio = 1,
     BorderOptions? border,
     BorderOptions? controlsBorder,
     BorderOptions? viewPaneBorder,

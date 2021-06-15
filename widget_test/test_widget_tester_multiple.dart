@@ -6,7 +6,10 @@ import 'package:widget_tester/widget_tester_options.dart';
 /// --no-sound-null-safety is required
 void main() {
   runApp(WidgetTesterApp(
-    options: WidgetTesterOptions(columns: 2),
+    options: WidgetTesterOptions(
+      columns: 2,
+      aspectRatio: 9 / 16,
+    ),
     children: [
       Text(
         'Push the button to do an action.',
