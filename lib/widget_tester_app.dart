@@ -19,7 +19,6 @@ class WidgetTesterApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('--------  $options');
     return MaterialApp(
       title: title,
       theme: ThemeData.dark(),

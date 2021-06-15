@@ -12,27 +12,42 @@ class WidgetTesterSizeControls extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     final size = watch(sizeProvider).state;
 
-    return Row(
+    return Wrap(
+      alignment: WrapAlignment.center,
       children: [
-        Text('Width: '),
-        Slider(
-          value: size.width,
-          min: 1,
-          max: 100,
-          divisions: 100,
-          onChanged: (double value) {
-            watch(sizeProvider).state = Size(value, size.height);
-          },
+        SizedBox(
+          width: 250,
+          child: Row(
+            children: [
+              Text('Width: '),
+              Slider(
+                value: size.width,
+                min: 1,
+                max: 100,
+                divisions: 100,
+                onChanged: (double value) {
+                  watch(sizeProvider).state = Size(value, size.height);
+                },
+              ),
+            ],
+          ),
         ),
-        Text('Height: '),
-        Slider(
-          value: size.height,
-          min: 1,
-          max: 100,
-          divisions: 100,
-          onChanged: (double value) {
-            watch(sizeProvider).state = Size(size.width, value);
-          },
+        SizedBox(
+          width: 250,
+          child: Row(
+            children: [
+              Text('Height: '),
+              Slider(
+                value: size.height,
+                min: 1,
+                max: 100,
+                divisions: 100,
+                onChanged: (double value) {
+                  watch(sizeProvider).state = Size(size.width, value);
+                },
+              ),
+            ],
+          ),
         ),
       ],
     );

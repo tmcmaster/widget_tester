@@ -4,16 +4,6 @@ import 'package:widget_tester/widget_tester_options.dart';
 import 'package:widget_tester/widget_tester_providers.dart';
 
 class WidgetTesterViewPane extends ConsumerWidget {
-  // static const Color OUTER_BORDER_COLOR = Colors.blueGrey;
-  // static const EdgeInsets OUTER_BORDER_MARGIN = EdgeInsets.all(15.0);
-  // static const EdgeInsets OUTER_BORDER_PADDING = EdgeInsets.all(3.0);
-  // static const Color INNER_BORDER_COLOR = Colors.green;
-  // static const EdgeInsets INNER_BORDER_MARGIN = EdgeInsets.all(0.0);
-  // static const EdgeInsets INNER_BORDER_PADDING = EdgeInsets.all(0.0);
-  // static const Color CHILD_BORDER_COLOR = Colors.transparent;
-  // static const EdgeInsets CHILD_BORDER_MARGIN = EdgeInsets.all(0.0);
-  // static const EdgeInsets CHILD_BORDER_PADDING = EdgeInsets.all(0.0);
-
   late final WidgetTesterOptions? _options;
   final Widget child;
 
@@ -34,7 +24,10 @@ class WidgetTesterViewPane extends ConsumerWidget {
         final constraintsNotifier = watch(WidgetTesterProviders.constraintsProvider.notifier);
         setConstraints(constraints, constraintsNotifier, options);
 
+        final minWidth = _whitespaceInnerWidth(options);
         final maxWidth = constraints.maxWidth - _whitespaceOuterWidth(options);
+
+        final minHeight = _whitespaceInnerHeight(options);
         final maxHeight = constraints.maxHeight - _whitespaceOuterHeight(options);
 
         final sizePercentage = watch(WidgetTesterProviders.sizeProvider).state;
@@ -50,8 +43,8 @@ class WidgetTesterViewPane extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  width: (width < maxWidth ? width : maxWidth),
-                  height: (height < maxHeight ? height : maxHeight),
+                  width: (width < maxWidth ? (width > minWidth ? width : minWidth) : maxWidth),
+                  height: (height < maxHeight ? (height > minHeight ? height : minHeight) : maxHeight),
                   margin: options.resizePaneBorder.margin,
                   padding: options.resizePaneBorder.padding,
                   decoration: options.resizePaneBorder.decoration, //ViewPane.INNER_BORDER)),
@@ -96,11 +89,21 @@ class WidgetTesterViewPane extends ConsumerWidget {
   }
 
   static double _whitespaceInnerWidth(WidgetTesterOptions options) {
-    return options.widgetPaneBorder.padding.left + options.widgetPaneBorder.padding.right;
+    return options.widgetPaneBorder.padding.left +
+        options.widgetPaneBorder.padding.right +
+        options.widgetPaneBorder.margin.left +
+        options.widgetPaneBorder.margin.right +
+        options.resizePaneBorder.padding.left +
+        options.resizePaneBorder.padding.right;
   }
 
   static double _whitespaceInnerHeight(WidgetTesterOptions options) {
-    return options.widgetPaneBorder.padding.top + options.widgetPaneBorder.padding.right;
+    return options.widgetPaneBorder.padding.top +
+        options.widgetPaneBorder.padding.bottom +
+        options.widgetPaneBorder.margin.top +
+        options.widgetPaneBorder.margin.bottom +
+        options.resizePaneBorder.padding.top +
+        options.resizePaneBorder.padding.bottom;
   }
 
   /// TODO: need to investigate the extra required 50 constant
@@ -119,13 +122,5 @@ class WidgetTesterViewPane extends ConsumerWidget {
         options.resizePaneBorder.padding.top +
         options.resizePaneBorder.padding.bottom +
         50;
-  }
-
-  static Size _calculateRation(BoxConstraints oldConstraints, BoxConstraints newConstraints) {
-    if (oldConstraints.maxHeight == 0 || oldConstraints.maxWidth == 0) {
-      return Size(1, 1);
-    }
-    return Size(1,
-        1); //Size(newConstraints.maxWidth / oldConstraints.maxWidth, newConstraints.maxHeight / oldConstraints.maxHeight);
   }
 }

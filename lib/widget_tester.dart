@@ -22,7 +22,6 @@ class WidgetTester extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    print('Building the WidgetTester');
     return Expanded(
       child: Container(
         margin: options.border.margin,
@@ -63,7 +62,6 @@ class ConstraintsNotifier extends StateNotifier<BoxConstraints> {
   void setConstraints(BoxConstraints constraints) {
     if (state.maxWidth != constraints.maxWidth || state.maxHeight != constraints.maxHeight) {
       if (constraints.maxWidth > 50 && constraints.maxHeight > 50) {
-        print('New Constraints: $constraints');
         state = constraints;
       }
     }

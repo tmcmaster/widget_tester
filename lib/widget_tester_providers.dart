@@ -23,7 +23,7 @@ class ConstraintsNotifier extends StateNotifier<BoxConstraints> {
   void setConstraints(BoxConstraints constraints) {
     if (state.maxWidth != constraints.maxWidth || state.maxHeight != constraints.maxHeight) {
       if (constraints.maxWidth > 50 && constraints.maxHeight > 50) {
-        print('New Constraints: $constraints');
+        //print('New Constraints: $constraints');
         state = constraints;
       }
     }

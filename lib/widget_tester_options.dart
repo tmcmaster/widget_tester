@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// TODO: Need to add support for copyWith, from a static defined default Option
 class WidgetTesterOptions {
   final int columns;
   late final BorderOptions? _border;
@@ -45,29 +46,30 @@ class WidgetTesterOptions {
       _viewPaneBorder ??
       BorderOptions(
         margin: EdgeInsets.all(15.0),
-        padding: EdgeInsets.all(3.0),
-        color: Colors.blue,
+        padding: EdgeInsets.all(0.0),
+        color: Colors.blueGrey,
       );
 
   /// Resize Pane Border
   BorderOptions get resizePaneBorder =>
       _resizePaneBorder ??
       BorderOptions(
-        margin: EdgeInsets.all(10.0),
-        padding: EdgeInsets.all(10.0),
-        color: Colors.green,
+        margin: EdgeInsets.all(0.0),
+        padding: EdgeInsets.all(0.0),
+        color: Colors.blueGrey,
       );
 
   /// Widget Pane Border
   BorderOptions get widgetPaneBorder =>
       _widgetPaneBorder ??
       BorderOptions(
-        margin: EdgeInsets.all(10.0),
-        padding: EdgeInsets.all(10.0),
-        color: Colors.yellow,
+        margin: EdgeInsets.all(0.0),
+        padding: EdgeInsets.all(0.0),
+        color: Colors.blueAccent,
       );
 }
 
+/// TODO: Need to add support for copyWith, from a static defined default Option
 class BorderOptions {
   final EdgeInsets margin;
   final EdgeInsets padding;
