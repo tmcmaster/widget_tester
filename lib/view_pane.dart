@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:widget_tester/widget_tester.dart';
+import 'package:widget_tester/widget_tester_providers.dart';
 
 class ViewPane extends ConsumerWidget {
   static const Color OUTER_BORDER_COLOR = Colors.blueGrey;
   static const EdgeInsets OUTER_BORDER_MARGIN = EdgeInsets.all(15.0);
   static const EdgeInsets OUTER_BORDER_PADDING = EdgeInsets.all(3.0);
-  static const Color INNER_BORDER_COLOR = Colors.blueAccent;
-  static const EdgeInsets INNER_BORDER_MARGIN = EdgeInsets.all(15.0);
-  static const EdgeInsets INNER_BORDER_PADDING = EdgeInsets.all(20.0);
+  static const Color INNER_BORDER_COLOR = Colors.green;
+  static const EdgeInsets INNER_BORDER_MARGIN = EdgeInsets.all(0.0);
+  static const EdgeInsets INNER_BORDER_PADDING = EdgeInsets.all(0.0);
+  static const Color CHILD_BORDER_COLOR = Colors.transparent;
+  static const EdgeInsets CHILD_BORDER_MARGIN = EdgeInsets.all(0.0);
+  static const EdgeInsets CHILD_BORDER_PADDING = EdgeInsets.all(0.0);
 
   final Widget child;
 
@@ -19,14 +22,18 @@ class ViewPane extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final size = watch(WidgetTester.sizeProvider).state;
-    final width = size.width;
-    final height = size.height;
     return LayoutBuilder(
       builder: (context, constraints) {
+        final constraintsNotifier = watch(WidgetTesterProviders.constraintsProvider.notifier);
+        setConstraints(constraints, constraintsNotifier);
+
         final maxWidth = constraints.maxWidth - _whitespaceOuterWidth();
         final maxHeight = constraints.maxHeight - _whitespaceOuterHeight();
-        setConstraints(watch(WidgetTester.constraintsProvider.notifier), constraints);
+
+        final sizePercentage = watch(WidgetTesterProviders.sizeProvider).state;
+        final width = maxWidth * (sizePercentage.width / 100);
+        final height = maxHeight * (sizePercentage.height / 100);
+
         return Container(
           margin: OUTER_BORDER_MARGIN,
           padding: OUTER_BORDER_PADDING,
@@ -41,13 +48,13 @@ class ViewPane extends ConsumerWidget {
                   margin: INNER_BORDER_MARGIN,
                   padding: INNER_BORDER_PADDING,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.green),
+                    border: Border.all(color: INNER_BORDER_COLOR),
                   ), //ViewPane.INNER_BORDER)),
                   child: Container(
-                    margin: const EdgeInsets.all(0),
-                    padding: const EdgeInsets.all(0),
+                    margin: CHILD_BORDER_MARGIN,
+                    padding: CHILD_BORDER_PADDING,
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.orange),
+                      border: Border.all(color: CHILD_BORDER_COLOR),
                     ),
                     child: child,
                   ),
@@ -60,17 +67,36 @@ class ViewPane extends ConsumerWidget {
     );
   }
 
-  static void setConstraints(ConstraintsNotifier notifier, BoxConstraints c) async {
+  static void setConstraints(
+    BoxConstraints newConstraints,
+    ConstraintsNotifier notifier,
+  ) async {
     Future.delayed(Duration(milliseconds: 1), () {
-      notifier.setConstraints(
-        BoxConstraints(
-          minWidth: c.minWidth + INNER_BORDER_PADDING.left + INNER_BORDER_PADDING.right,
-          maxWidth: c.maxWidth - _whitespaceOuterWidth(),
-          minHeight: c.minWidth + INNER_BORDER_PADDING.top + INNER_BORDER_PADDING.right,
-          maxHeight: c.maxHeight - _whitespaceOuterHeight(),
-        ),
-      );
+      final minWidth = _whitespaceInnerWidth();
+      final maxWidth = newConstraints.maxWidth - _whitespaceOuterWidth();
+      final minHeight = _whitespaceInnerHeight();
+      final maxHeight = newConstraints.maxHeight - _whitespaceOuterHeight();
+
+      if (minWidth < maxWidth && minHeight < maxHeight) {
+        final requiredConstraints = BoxConstraints(
+          minWidth: minWidth,
+          maxWidth: maxWidth,
+          minHeight: minHeight,
+          maxHeight: maxHeight,
+        );
+        notifier.setConstraints(requiredConstraints);
+      } else {
+        print('ERROR: Changing Slider constraints: Width($minWidth to $maxWidth) Height($minHeight to $maxHeight)');
+      }
     });
+  }
+
+  static double _whitespaceInnerWidth() {
+    return INNER_BORDER_PADDING.left + INNER_BORDER_PADDING.right;
+  }
+
+  static double _whitespaceInnerHeight() {
+    return INNER_BORDER_PADDING.top + INNER_BORDER_PADDING.right;
   }
 
   /// TODO: need to investigate the extra required 50 constant
@@ -89,5 +115,13 @@ class ViewPane extends ConsumerWidget {
         OUTER_BORDER_PADDING.top +
         OUTER_BORDER_PADDING.bottom +
         50;
+  }
+
+  static Size _calculateRation(BoxConstraints oldConstraints, BoxConstraints newConstraints) {
+    if (oldConstraints.maxHeight == 0 || oldConstraints.maxWidth == 0) {
+      return Size(1, 1);
+    }
+    return Size(1,
+        1); //Size(newConstraints.maxWidth / oldConstraints.maxWidth, newConstraints.maxHeight / oldConstraints.maxHeight);
   }
 }

@@ -3,31 +3,18 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widget_tester/size_controls.dart';
 import 'package:widget_tester/view_pane.dart';
+import 'package:widget_tester/widget_tester_providers.dart';
 
 class WidgetTester extends StatelessWidget {
-  static final sliderDivisionsProvider = StateProvider((ref) => 100);
-
-  static final sizeProvider = StateProvider<Size>((ref) => Size(300, 200));
-
-  static final constraintsProvider = StateNotifierProvider<ConstraintsNotifier, BoxConstraints>(
-    (ref) {
-      final size = ref.read(sizeProvider).state;
-      return ConstraintsNotifier(
-        BoxConstraints(
-          minWidth: 10,
-          maxWidth: size.width,
-          minHeight: 10,
-          maxHeight: size.height,
-        ),
-      );
-    },
-  );
-
-  final child;
+  final List<Widget> children;
+  final Widget? child;
+  final int columns;
 
   const WidgetTester({
     Key? key,
-    required this.child,
+    this.child,
+    this.children = const [],
+    this.columns = 1,
   }) : super(key: key);
 
   @override
@@ -46,12 +33,22 @@ class WidgetTester extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.blueGrey),
               ),
-              child: SizeControls(sizeProvider: sizeProvider),
+              child: SizeControls(sizeProvider: WidgetTesterProviders.sizeProvider),
             ),
             Expanded(
-              child: ViewPane(
-                child: child,
-              ),
+              child: (child != null
+                  ? ViewPane(
+                      child: child ?? Text('No components to test'),
+                    )
+                  : GridView.count(
+                      crossAxisCount: columns,
+                      children: children
+                          .map(
+                            (child) => ViewPane(
+                              child: child,
+                            ),
+                          )
+                          .toList())),
             ),
           ],
         ),

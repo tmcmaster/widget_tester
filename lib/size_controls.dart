@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:widget_tester/widget_tester.dart';
 
 class SizeControls extends ConsumerWidget {
   final StateProvider<Size> sizeProvider;
@@ -11,29 +10,28 @@ class SizeControls extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final constraints = watch(WidgetTester.constraintsProvider);
-    final divisions = watch(WidgetTester.sliderDivisionsProvider).state;
-    final size = watch(WidgetTester.sizeProvider).state;
+    final size = watch(sizeProvider).state;
+
     return Row(
       children: [
         Text('Width: '),
         Slider(
           value: size.width,
-          min: constraints.minWidth,
-          max: constraints.maxWidth,
-          divisions: divisions,
+          min: 1,
+          max: 100,
+          divisions: 100,
           onChanged: (double value) {
-            watch(WidgetTester.sizeProvider).state = Size(value, size.height);
+            watch(sizeProvider).state = Size(value, size.height);
           },
         ),
         Text('Height: '),
         Slider(
           value: size.height,
-          min: constraints.minHeight,
-          max: constraints.maxHeight,
-          divisions: divisions,
+          min: 1,
+          max: 100,
+          divisions: 100,
           onChanged: (double value) {
-            watch(WidgetTester.sizeProvider).state = Size(size.width, value);
+            watch(sizeProvider).state = Size(size.width, value);
           },
         ),
       ],

@@ -7,9 +7,7 @@ void main() {
 }
 
 class TestWidgetTester extends StatelessWidget {
-  static Widget create() => TestWidgetTester();
-
-  static const String title = 'Scratch Area';
+  static const String title = 'Testing WidgetTesterGrid';
   const TestWidgetTester({
     Key? key,
   }) : super(key: key);
@@ -34,22 +32,33 @@ class TestWidgetTester extends StatelessWidget {
               child: Column(
                 children: [
                   WidgetTester(
-                    child: Text(
-                      'Push the button to do an action.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                        color: Colors.yellow,
+                    columns: 3,
+                    // child: Text(
+                    //   'Push the button to do an action.',
+                    //   textAlign: TextAlign.center,
+                    //   style: TextStyle(
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 17,
+                    //     color: Colors.yellow,
+                    //   ),
+                    // ),
+                    children: [
+                      Text(
+                        'Push the button to do an action.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          color: Colors.yellow,
+                        ),
                       ),
-                    ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text('This is a button with a long title.'),
+                      ),
+                      ...[1, 2, 3, 4, 5, 6].map((i) => Text('Text $i')).toList()
+                    ],
                   ),
-                  WidgetTester(
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('This is a button with a long title.'),
-                    ),
-                  )
                 ],
               ),
             ),
