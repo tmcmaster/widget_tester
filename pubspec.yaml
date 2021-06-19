@@ -22,11 +22,10 @@ dev_dependencies:
   pedantic:
   lint:
   test:
+
   flutter_workbench:
-    path: ../flutter_workbench
-#    git:
-#      url: https://github.com/tmcmaster/flutter_workbench.git
+    git:
+      url: https://github.com/tmcmaster/flutter_workbench.git
   theme_builder:
-    path: ../theme_builder
-#    git:
-#      url: https://github.com/tmcmaster/theme_builder.git
+    git:
+      url: https://github.com/tmcmaster/theme_builder.git
