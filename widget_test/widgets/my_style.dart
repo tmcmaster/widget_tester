@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:theme_builder/theme_builder_style.dart';
-import 'package:theme_builder/theme_builder_themes.dart';
+import 'package:theme_builder/theme_builder.dart';
 
 abstract class MyStyle {
   static final _sharedTheme = ThemeData().copyWith(

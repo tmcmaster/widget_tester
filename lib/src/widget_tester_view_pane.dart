@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:widget_tester/widget_tester_options.dart';
-import 'package:widget_tester/widget_tester_providers.dart';
+
+import 'widget_tester_options.dart';
+import 'widget_tester_providers.dart';
 
 class WidgetTesterViewPane extends ConsumerWidget {
   late final WidgetTesterOptions? _options;
