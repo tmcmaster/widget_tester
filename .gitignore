@@ -32,6 +32,10 @@ doc/api/
 .pub/
 /build/
 
+ios
+web
+android
+
 **/*.log
 hold
 .hold
@@ -46,3 +50,5 @@ lib/model/*\.freezed\.dart
 
 lib/**/models/*.g.dart
 lib/**/models/*.freezed.dart
+
+lib/generated_plugin_registrant.dart

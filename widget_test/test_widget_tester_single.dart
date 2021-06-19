@@ -1,20 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:lipsum/lipsum.dart' as lipsum;
-import 'package:widget_tester/widget_tester_app.dart';
+import 'package:faker/faker.dart';
+import 'package:flutter_workbench/flutter_workbench.dart';
+import 'package:widget_tester/widget_tester_options.dart';
 
-/// --no-sound-null-safety is required
+import 'widgets/my_style.dart';
+import 'widgets/my_widgets.dart';
+
 void main() {
-  runApp(WidgetTesterApp(
-    children: [
-      Text(
-        '${lipsum.createParagraph(numParagraphs: 4)}',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 17,
-          color: Colors.yellow,
-        ),
-      ),
-    ],
-  ));
+  final singleWidget = MyText('${faker.lorem.sentences(4)}');
+
+  FlutterWorkbench.runWidgetTesterApp(
+    title: 'WidgetTest',
+    styles: MyStyle.themes,
+    options: WidgetTesterOptions(),
+    children: [singleWidget],
+  );
 }

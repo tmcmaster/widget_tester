@@ -7,11 +7,14 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
   flutter: ">=2.2.0"
 
+flutter:
+  uses-material-design: true
+
 dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod:
-  lipsum: ^1.0.1
+  faker: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -19,3 +22,7 @@ dev_dependencies:
   pedantic:
   lint:
   test:
+  flutter_workbench:
+    path: ../flutter_workbench
+  theme_builder:
+    path: ../theme_builder

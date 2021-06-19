@@ -86,4 +86,16 @@ class BorderOptions {
       border: Border.all(color: color ?? Colors.transparent),
     );
   }
+
+  BorderOptions copyWith({
+    Color? color,
+    EdgeInsets? margin,
+    EdgeInsets? padding,
+  }) {
+    return BorderOptions(
+      color: color ?? decoration.color,
+      margin: margin ?? this.margin,
+      padding: padding ?? this.padding,
+    );
+  }
 }
