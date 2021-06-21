@@ -24,38 +24,36 @@ class WidgetTester extends ConsumerWidget {
   /// TODO: the lsyout builder needs to be to this level.
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    return Expanded(
-      child: Container(
-        margin: options.border.margin,
-        padding: options.border.padding,
-        decoration: options.border.decoration,
-        child: Column(
-          children: [
-            Container(
-              margin: options.controlsBorder.margin,
-              padding: options.controlsBorder.padding,
-              decoration: options.controlsBorder.decoration,
-              child: WidgetTesterSizeControls(sizeProvider: WidgetTesterProviders.sizeProvider),
-            ),
-            Expanded(
-              child: (children.length == 1
-                  ? WidgetTesterViewPane(
-                      child: children[0],
-                    )
-                  : GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: options.columns,
-                        childAspectRatio: options.aspectRatio,
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 5,
-                      ),
-                      itemCount: children.length,
-                      itemBuilder: (BuildContext ctx, index) {
-                        return WidgetTesterViewPane(child: children[index]);
-                      })),
-            ),
-          ],
-        ),
+    return Container(
+      margin: options.border.margin,
+      padding: options.border.padding,
+      decoration: options.border.decoration,
+      child: Column(
+        children: [
+          Container(
+            margin: options.controlsBorder.margin,
+            padding: options.controlsBorder.padding,
+            decoration: options.controlsBorder.decoration,
+            child: WidgetTesterSizeControls(sizeProvider: WidgetTesterProviders.sizeProvider),
+          ),
+          Expanded(
+            child: (children.length == 1
+                ? WidgetTesterViewPane(
+                    child: children[0],
+                  )
+                : GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: options.columns,
+                      childAspectRatio: options.aspectRatio,
+                      crossAxisSpacing: 5,
+                      mainAxisSpacing: 5,
+                    ),
+                    itemCount: children.length,
+                    itemBuilder: (BuildContext ctx, index) {
+                      return WidgetTesterViewPane(child: children[index]);
+                    })),
+          ),
+        ],
       ),
     );
   }
