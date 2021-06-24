@@ -8,7 +8,7 @@ import 'widgets/my_widgets.dart';
 void main() {
   final singleWidget = MyText('${faker.lorem.sentences(4)}');
 
-  FlutterWorkbench.runWidgetTesterApp(
+  FlutterWorkbench.runAppWidgetTester(
     title: 'WidgetTest',
     styles: MyStyle.themes,
     options: WidgetTesterOptions(),

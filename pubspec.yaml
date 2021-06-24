@@ -24,10 +24,6 @@ dev_dependencies:
   test:
 
   flutter_workbench:
-#    path: ../flutter_workbench
-    git:
-      url: https://github.com/tmcmaster/flutter_workbench.git
-  theme_builder:
-#    path: ../theme_builder
-    git:
-      url: https://github.com/tmcmaster/theme_builder.git
+    path: ../flutter_workbench
+#    git:
+#      url: https://github.com/tmcmaster/flutter_workbench.git

@@ -27,7 +27,7 @@ class WidgetTester extends ConsumerWidget {
     return Container(
       margin: options.border.margin,
       padding: options.border.padding,
-      decoration: options.border.decoration,
+      decoration: options.border.decoration.copyWith(color: Colors.grey.shade200),
       child: Column(
         children: [
           Container(

@@ -9,12 +9,12 @@ void main() {
   final widgetBuilder = (i) => MyText('${faker.lorem.words(i * 4)}');
   final generatedTextWidgets = Iterable.generate(10).map(widgetBuilder).toList();
 
-  FlutterWorkbench.runWidgetTesterApp(
+  FlutterWorkbench.runAppWidgetTester(
     title: 'WidgetTester',
     styles: MyStyle.themes,
     options: WidgetTesterOptions(
       columns: 4,
-      aspectRatio: 2,
+      aspectRatio: 1,
     ),
     children: generatedTextWidgets,
   );

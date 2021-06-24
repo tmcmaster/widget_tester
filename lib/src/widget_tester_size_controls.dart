@@ -12,44 +12,49 @@ class WidgetTesterSizeControls extends ConsumerWidget {
   Widget build(BuildContext context, ScopedReader watch) {
     final size = watch(sizeProvider).state;
 
-    return Wrap(
-      alignment: WrapAlignment.center,
-      children: [
-        SizedBox(
-          width: 250,
-          child: Row(
-            children: [
-              Text('Width: '),
-              Slider(
-                value: size.width,
-                min: 1,
-                max: 100,
-                divisions: 100,
-                onChanged: (double value) {
-                  watch(sizeProvider).state = Size(value, size.height);
-                },
+    return Card(
+      child: Container(
+        padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          children: [
+            SizedBox(
+              width: 250,
+              child: Row(
+                children: [
+                  Text('Width: '),
+                  Slider(
+                    value: size.width,
+                    min: 1,
+                    max: 100,
+                    divisions: 100,
+                    onChanged: (double value) {
+                      watch(sizeProvider).state = Size(value, size.height);
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        SizedBox(
-          width: 250,
-          child: Row(
-            children: [
-              Text('Height: '),
-              Slider(
-                value: size.height,
-                min: 1,
-                max: 100,
-                divisions: 100,
-                onChanged: (double value) {
-                  watch(sizeProvider).state = Size(size.width, value);
-                },
+            ),
+            SizedBox(
+              width: 250,
+              child: Row(
+                children: [
+                  Text('Height: '),
+                  Slider(
+                    value: size.height,
+                    min: 1,
+                    max: 100,
+                    divisions: 100,
+                    onChanged: (double value) {
+                      watch(sizeProvider).state = Size(size.width, value);
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

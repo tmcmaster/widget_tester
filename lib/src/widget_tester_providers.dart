@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class WidgetTesterProviders {
-  static final sizeProvider = StateProvider<Size>((ref) => Size(80, 80));
+  static final sizeProvider = StateProvider<Size>((ref) => Size(100, 100));
 
   static final constraintsProvider = StateNotifierProvider<ConstraintsNotifier, BoxConstraints>(
     (ref) {

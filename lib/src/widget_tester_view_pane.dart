@@ -53,7 +53,7 @@ class WidgetTesterViewPane extends ConsumerWidget {
                     margin: options.widgetPaneBorder.margin,
                     padding: options.widgetPaneBorder.padding,
                     decoration: options.widgetPaneBorder.decoration,
-                    child: child,
+                    child: Card(child: child),
                   ),
                 ),
               ],
