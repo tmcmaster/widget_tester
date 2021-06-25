@@ -25,20 +25,17 @@ class WidgetTesterViewPane extends ConsumerWidget {
         final constraintsNotifier = watch(WidgetTesterProviders.constraintsProvider.notifier);
         setConstraints(constraints, constraintsNotifier, options);
 
-        final minWidth = _whitespaceInnerWidth(options);
-        final maxWidth = constraints.maxWidth - _whitespaceOuterWidth(options);
+        final minWidth = 0.0;
+        final maxWidth = constraints.maxWidth;
 
-        final minHeight = _whitespaceInnerHeight(options);
-        final maxHeight = constraints.maxHeight - _whitespaceOuterHeight(options);
+        final minHeight = 0.0;
+        final maxHeight = constraints.maxHeight;
 
         final sizePercentage = watch(WidgetTesterProviders.sizeProvider).state;
         final width = maxWidth * (sizePercentage.width / 100);
         final height = maxHeight * (sizePercentage.height / 100);
 
         return Container(
-          margin: options.viewPaneBorder.margin,
-          padding: options.viewPaneBorder.padding,
-          decoration: options.viewPaneBorder.decoration,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -46,13 +43,7 @@ class WidgetTesterViewPane extends ConsumerWidget {
                 Container(
                   width: (width < maxWidth ? (width > minWidth ? width : minWidth) : maxWidth),
                   height: (height < maxHeight ? (height > minHeight ? height : minHeight) : maxHeight),
-                  margin: options.resizePaneBorder.margin,
-                  padding: options.resizePaneBorder.padding,
-                  decoration: options.resizePaneBorder.decoration, //ViewPane.INNER_BORDER)),
                   child: Container(
-                    margin: options.widgetPaneBorder.margin,
-                    padding: options.widgetPaneBorder.padding,
-                    decoration: options.widgetPaneBorder.decoration,
                     child: Card(child: child),
                   ),
                 ),
@@ -70,10 +61,10 @@ class WidgetTesterViewPane extends ConsumerWidget {
     WidgetTesterOptions options,
   ) async {
     Future.delayed(Duration(milliseconds: 1), () {
-      final minWidth = _whitespaceInnerWidth(options);
-      final maxWidth = newConstraints.maxWidth - _whitespaceOuterWidth(options);
-      final minHeight = _whitespaceInnerHeight(options);
-      final maxHeight = newConstraints.maxHeight - _whitespaceOuterHeight(options);
+      final minWidth = 0.0;
+      final maxWidth = newConstraints.maxWidth;
+      final minHeight = 0.0;
+      final maxHeight = newConstraints.maxHeight;
 
       if (minWidth < maxWidth && minHeight < maxHeight) {
         final requiredConstraints = BoxConstraints(
@@ -87,41 +78,5 @@ class WidgetTesterViewPane extends ConsumerWidget {
         print('ERROR: Changing Slider constraints: Width($minWidth to $maxWidth) Height($minHeight to $maxHeight)');
       }
     });
-  }
-
-  static double _whitespaceInnerWidth(WidgetTesterOptions options) {
-    return options.widgetPaneBorder.padding.left +
-        options.widgetPaneBorder.padding.right +
-        options.widgetPaneBorder.margin.left +
-        options.widgetPaneBorder.margin.right +
-        options.resizePaneBorder.padding.left +
-        options.resizePaneBorder.padding.right;
-  }
-
-  static double _whitespaceInnerHeight(WidgetTesterOptions options) {
-    return options.widgetPaneBorder.padding.top +
-        options.widgetPaneBorder.padding.bottom +
-        options.widgetPaneBorder.margin.top +
-        options.widgetPaneBorder.margin.bottom +
-        options.resizePaneBorder.padding.top +
-        options.resizePaneBorder.padding.bottom;
-  }
-
-  /// TODO: need to investigate the extra required 50 constant
-  static double _whitespaceOuterWidth(WidgetTesterOptions options) {
-    return options.resizePaneBorder.margin.left +
-        options.resizePaneBorder.margin.right +
-        options.resizePaneBorder.padding.left +
-        options.resizePaneBorder.padding.right +
-        50;
-  }
-
-  /// TODO: need to investigate the extra required 50 constant
-  static double _whitespaceOuterHeight(WidgetTesterOptions options) {
-    return options.resizePaneBorder.margin.top +
-        options.resizePaneBorder.margin.bottom +
-        options.resizePaneBorder.padding.top +
-        options.resizePaneBorder.padding.bottom +
-        50;
   }
 }

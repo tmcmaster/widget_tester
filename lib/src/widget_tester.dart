@@ -25,33 +25,35 @@ class WidgetTester extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     return Container(
-      margin: options.border.margin,
-      padding: options.border.padding,
-      decoration: options.border.decoration.copyWith(color: Colors.grey.shade200),
+      decoration: BoxDecoration(color: Colors.grey.shade200),
       child: Column(
         children: [
           Container(
-            margin: options.controlsBorder.margin,
-            padding: options.controlsBorder.padding,
-            decoration: options.controlsBorder.decoration,
+            margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
             child: WidgetTesterSizeControls(sizeProvider: WidgetTesterProviders.sizeProvider),
           ),
           Expanded(
-            child: (children.length == 1
-                ? WidgetTesterViewPane(
-                    child: children[0],
-                  )
-                : GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: options.columns,
-                      childAspectRatio: options.aspectRatio,
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 5,
-                    ),
-                    itemCount: children.length,
-                    itemBuilder: (BuildContext ctx, index) {
-                      return WidgetTesterViewPane(child: children[index]);
-                    })),
+            child: Container(
+              margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              child: (children.length == 1
+                  ? WidgetTesterViewPane(
+                      child: children[0],
+                    )
+                  : GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: options.columns,
+                        childAspectRatio: options.aspectRatio,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5,
+                      ),
+                      itemCount: children.length,
+                      itemBuilder: (BuildContext ctx, index) {
+                        return Container(
+                          margin: EdgeInsets.all(10),
+                          child: WidgetTesterViewPane(child: children[index]),
+                        );
+                      })),
+            ),
           ),
         ],
       ),
