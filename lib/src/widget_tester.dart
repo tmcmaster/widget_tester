@@ -23,7 +23,7 @@ class WidgetTester extends ConsumerWidget {
 
   /// TODO: the lsyout builder needs to be to this level.
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       decoration: BoxDecoration(color: Colors.grey.shade200),
       child: Column(

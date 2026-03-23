@@ -19,10 +19,10 @@ class WidgetTesterViewPane extends ConsumerWidget {
   WidgetTesterOptions get options => _options ?? WidgetTesterOptions();
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final constraintsNotifier = watch(WidgetTesterProviders.constraintsProvider.notifier);
+        final constraintsNotifier = ref.read(WidgetTesterProviders.constraintsProvider.notifier);
         setConstraints(constraints, constraintsNotifier, options);
 
         final minWidth = 0.0;
@@ -31,7 +31,7 @@ class WidgetTesterViewPane extends ConsumerWidget {
         final minHeight = 0.0;
         final maxHeight = constraints.maxHeight;
 
-        final sizePercentage = watch(WidgetTesterProviders.sizeProvider).state;
+        final sizePercentage = ref.watch(WidgetTesterProviders.sizeProvider);
         final width = maxWidth * (sizePercentage.width / 100);
         final height = maxHeight * (sizePercentage.height / 100);
 

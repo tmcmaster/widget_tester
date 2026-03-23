@@ -9,8 +9,8 @@ class WidgetTesterSizeControls extends ConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final size = watch(sizeProvider).state;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final size = ref.watch(sizeProvider);
 
     return Card(
       child: Container(
@@ -29,7 +29,7 @@ class WidgetTesterSizeControls extends ConsumerWidget {
                     max: 100,
                     divisions: 100,
                     onChanged: (double value) {
-                      watch(sizeProvider).state = Size(value, size.height);
+                      ref.read(sizeProvider.notifier).state = Size(value, size.height);
                     },
                   ),
                 ],
@@ -46,7 +46,7 @@ class WidgetTesterSizeControls extends ConsumerWidget {
                     max: 100,
                     divisions: 100,
                     onChanged: (double value) {
-                      watch(sizeProvider).state = Size(size.width, value);
+                      ref.read(sizeProvider.notifier).state = Size(size.width, value);
                     },
                   ),
                 ],
